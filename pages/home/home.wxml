@@ -1,0 +1,35 @@
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <block wx:for="{{imgUrls}}" wx:key='id'>
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" mode='widthFix' />
+    </swiper-item>
+  </block>
+</swiper>
+<view class='type-view'>
+  <view class='type-view-top'>
+    <block wx:for='{{type_top_list}}' wx:key='id'>
+      <view class='type-item-view'>
+        <image class='type-img' src='{{item.type_img_url}}'></image>
+        <text class='type-text'>{{item.text}}</text>
+      </view>
+    </block>
+  </view>
+  <!-- <view class='type-view-bottom'>
+    <block wx:for='{{type_bottom_list}}' wx:key='id'>
+      <view class='type-item-view'>
+        <image class='type-img' src='{{item.type_img_url}}'></image>
+        <text class='type-text'>{{item.text}}</text>
+      </view>
+    </block>
+  </view> -->
+</view>
+<view class='recommend-view'>
+  <view class='line-view'>
+  </view>
+  <text class='recommend-text'>精选推荐</text>
+</view>
+<view class='hot-list'>
+  <block wx:for='{{hotList}}' wx:key='id'>
+    <image src='{{item.img_url}}' class="item-img {{index%2==1?'right':''}}"></image>
+  </block>
+</view>
