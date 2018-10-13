@@ -1,16 +1,21 @@
-// pages/home/home.js
+var baseUrl = 'https://www.antleague.com/'
+let current_page = 1
+let page_size = 20
+let random_index
+let list
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    base_img_url: baseUrl + 'heads/',
     imgUrls: [
       '../../images/1.jpg',
       '../../images/2.jpg',
       '../../images/3.jpg',
     ],
-    indicatorDots: false,
+    indicatorDots: true,
     autoplay: false,
     interval: 5000,
     duration: 1000,
@@ -52,22 +57,6 @@ Page({
         type_img_url: '../../images/d8.png',
         text: '更多头像'
       }
-    ],
-    hotList:[
-      {img_url:'../../images/mn/1.jpeg'},
-      { img_url: '../../images/mn/2.jpeg' },
-      { img_url: '../../images/mn/3.jpeg' },
-      { img_url: '../../images/mn/4.jpeg' },
-      { img_url: '../../images/mn/5.jpeg' },
-      { img_url: '../../images/mn/6.jpeg' },
-      { img_url: '../../images/mn/7.jpeg' },
-      { img_url: '../../images/mn/8.jpeg' },
-      { img_url: '../../images/mn/9.jpeg' },
-      { img_url: '../../images/mn/10.jpeg' },
-      { img_url: '../../images/mn/11.jpeg' },
-      { img_url: '../../images/mn/12.jpeg' },
-      { img_url: '../../images/mn/13.jpeg' },
-      { img_url: '../../images/mn/14.jpeg' }
     ]
   },
 
@@ -75,37 +64,35 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    random_index = Math.floor(Math.random() * 60);
+    console.log('random_index--->' + random_index)
+    current_page = random_index;
+    this.loadDataByPage();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
+  loadDataByPage:function(){
+    var that = this
+    let url = baseUrl + 'queryheads'
+    wx.request({
+      url: url,
+      data: {
+        'page': current_page
+      },
+      method: 'POST',
+      success: function (result) {
+        console.log(result.data.data)
+        if(list == null){
+          list = result.data.data
+        }else{
+          list = list.concat(result.data.data)
+        }
+        that.setData({
+          hotList: list
+        })
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
+  
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
@@ -113,11 +100,32 @@ Page({
 
   },
 
+  imagedetail:function(e){
+    let index = e.currentTarget.dataset.index
+    console.log('index--->' + index)
+
+    let add_page = 0
+    let click_index = 0;
+    if (index % page_size == 0){
+      add_page = index / page_size
+      click_index = 0
+    }else{
+      add_page = parseInt(index/page_size)
+      click_index = index % page_size
+    }
+
+    let query_page = random_index + add_page
+    wx.navigateTo({
+      url: '/pages/headshow/headshow?qpage='+query_page + '&cindex='+click_index,
+    })
+
+  },
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    current_page++;
+    this.loadDataByPage();
   },
 
   /**

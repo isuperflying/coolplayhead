@@ -1,0 +1,14 @@
+/* pages/headshow/headshow.wxss */
+page {
+  width: 100%;
+  height: 100%;
+}
+swiper {
+  width: 100%;
+  height: 600rpx;
+}
+
+.slide-image {
+  width: 400rpx;
+  height: 400rpx;
+}

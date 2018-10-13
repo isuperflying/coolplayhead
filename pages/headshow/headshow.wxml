@@ -1,0 +1,7 @@
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}">
+  <block wx:for="{{headList}}" wx:key='id'>
+    <swiper-item>
+      <image src="{{base_img_url + item.head_url}}" class="slide-image" mode='widthFix' />
+    </swiper-item>
+  </block>
+</swiper>

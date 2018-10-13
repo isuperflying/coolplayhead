@@ -30,6 +30,6 @@
 </view>
 <view class='hot-list'>
   <block wx:for='{{hotList}}' wx:key='id'>
-    <image src='{{item.img_url}}' class="item-img {{index%2==1?'right':''}}"></image>
+    <image src='{{base_img_url + item.head_url}}'  bindtap='imagedetail' data-index='{{index}}' class="item-img {{index%2==1?'right':''}}"></image>
   </block>
 </view>
