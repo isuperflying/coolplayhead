@@ -1,7 +1,28 @@
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}">
   <block wx:for="{{headList}}" wx:key='id'>
     <swiper-item>
-      <image src="{{base_img_url + item.head_url}}" class="slide-image" mode='widthFix' />
+      <image src="{{item.head_url}}" class="slide-image" mode='widthFix' />
     </swiper-item>
   </block>
 </swiper>
+
+<view class='bottom-view'>
+  <view class='down-view'>
+    <image class='down-img' src='../../images/down_icon.png'></image>
+    <text class='down-text'>下载头像</text>
+  </view>
+  <view class='collection-view'>
+    <view class='item-view'>
+        <image src='../../images/edit_icon.png'></image>
+        <text>美化</text>
+    </view>
+    <view class='item-view'>
+        <image src='../../images/share_icon.png'></image>
+        <text>分享</text>
+    </view>
+    <view class='item-view'>
+        <image src='../../images/home_icon.png'></image>
+        <text>首页</text>
+    </view>
+  </view>
+</view>

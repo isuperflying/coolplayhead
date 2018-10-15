@@ -11,6 +11,7 @@ Page({
     base_img_url: baseUrl + 'heads/',
     indicatorDots: false,
     autoplay: false,
+    headList: [{ head_url: '../../images/test/1.jpg' }, { head_url: '../../images/test/2.jpg' }, { head_url: '../../images/test/3.jpg' }, { head_url: '../../images/test/4.jpg' }]
   },
 
   /**
@@ -36,11 +37,9 @@ Page({
       success: function (result) {
         console.log(result.data.data)
         if (list == null) {
-          console.log('111111111111111111')
           list = result.data.data
           list = list.slice(start_index,list.length)
         } else {
-          console.log('222222222222222222222')
           list = list.concat(result.data.data)
         }
         that.setData({
@@ -62,7 +61,7 @@ Page({
    */
   onShow: function () {
     list = null
-    this.loadDataByPage();
+    //this.loadDataByPage();
   },
 
   /**
