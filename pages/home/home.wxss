@@ -59,8 +59,7 @@ swiper-item {
 }
 
 .type-img {
-  width: 72rpx;
-  height: 72rpx;
+  width: 100rpx;
 }
 
 .recommend-view {

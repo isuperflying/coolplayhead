@@ -1,6 +1,7 @@
 var baseUrl = 'https://www.antleague.com/'
 let current_page = 0
 let start_index = 0
+let current_index = 0
 let list
 Page({
 
@@ -10,8 +11,7 @@ Page({
   data: {
     base_img_url: baseUrl + 'heads/',
     indicatorDots: false,
-    autoplay: false,
-    headList: [{ head_url: '../../images/test/1.jpg' }, { head_url: '../../images/test/2.jpg' }, { head_url: '../../images/test/3.jpg' }, { head_url: '../../images/test/4.jpg' }]
+    autoplay: false
   },
 
   /**
@@ -27,11 +27,12 @@ Page({
   
   loadDataByPage: function () {
     var that = this
-    let url = baseUrl + 'queryheads'
+    let url = baseUrl + 'queryheadsbytype'
     wx.request({
       url: url,
       data: {
-        'page': current_page
+        'page': current_page,
+        'typeid': 1
       },
       method: 'POST',
       success: function (result) {
@@ -50,52 +51,110 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
     list = null
-    //this.loadDataByPage();
+    this.loadDataByPage();
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  bindChange: function (e) {
+    current_index = e.detail.current
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  saveImg: function (e) {
+    var that = this
+    //获取相册授权
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          console.log('没有授权--->')
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success() {
+              console.log('授权成功')
+              that.downimage();
+            }
+          })
+        } else {
+          console.log('已经有授权--->')
+          that.downimage();
+        }
+      }
+    })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+  downimage: function () {
+    var downUrl = this.data.base_img_url +  this.data.headList[current_index].head_url
 
+    if (downUrl != null && downUrl.indexOf('https') == -1) {
+      downUrl = downUrl.replace('http', 'https');
+    }
+
+    console.log('downUrl---' + downUrl)
+
+    //文件下载
+    wx.downloadFile({
+      url: downUrl,
+      success: function (res) {
+        console.log(res);
+        //图片保存到本地
+        wx.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,
+          success: function (data) {
+            console.log("save success--->" + data);
+            wx.showToast({
+              title: '图片已保存',
+            })
+          },
+          fail: function (err) {
+            console.log(err);
+            if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
+              console.log("用户一开始拒绝了，我们想再次发起授权")
+              console.log('打开设置窗口')
+              wx.openSetting({
+                success(settingdata) {
+                  console.log(settingdata)
+                  if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                    console.log('获取权限成功，给出再次点击图片保存到相册的提示。')
+                  } else {
+                    console.log('获取权限失败，给出不给权限就无法正常使用的提示')
+                  }
+                }
+              })
+            }
+          }
+        })
+      },
+      fail: function (res) {
+        console.log(res)
+      }
+    })
+  },
+  
+  imageedit: function (e) {
+    var url = this.data.base_img_url + this.data.headList[current_index].head_url
+    
+    if (url != null && url.indexOf('https') == -1) {
+      url = url.replace('http', 'https');
+    }
+    console.log('edit url---' + url)
+    wx.navigateTo({
+      url: '../imageeditor/imageeditor?bigImgUrl=' + url,
+    })
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  toHome:function(e){
+    wx.navigateBack();
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: "@你的头像该换换了",
+      path: '/pages/home/home'
+    }
   }
 })

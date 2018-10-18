@@ -36,7 +36,7 @@ Page({
         text: '动漫头像'
       },
       {
-        type_img_url: '../../images/d8.png',
+        type_img_url: '../../images/d5.png',
         text: '更多头像'
       }
     ],
@@ -72,11 +72,12 @@ Page({
 
   loadDataByPage:function(){
     var that = this
-    let url = baseUrl + 'queryheads'
+    let url = baseUrl + 'queryheadsbytype'
     wx.request({
       url: url,
       data: {
-        'page': current_page
+        'page': current_page,
+        'typeid':1
       },
       method: 'POST',
       success: function (result) {

@@ -1,34 +1,13 @@
-/* pages/headshow/headshow.wxss */
-
 page {
-  width: 100%;
-  height: 100%;
-  background: #fdf9f1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-color: #f1f1f1;
 }
 
-swiper {
-  width: 100%;
-  height: 600rpx;
-}
-
-swiper-item {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.slide-image {
-  width: 400rpx;
-  height: 400rpx;
-  border-radius: 10px;
-  border: 4px solid #fff;
+.result_btn {
+  width: 90%;
+  height: 42px;
+  margin-top: 15%;
+  background-color: #f55;
+  color: white;
 }
 
 .bottom-view {
@@ -56,7 +35,7 @@ swiper-item {
   height: 36rpx;
 }
 
-.down-text{
+.down-text {
   color: #fff;
   font-size: 36rpx;
   margin-left: 10rpx;
@@ -86,20 +65,20 @@ swiper-item {
   position: absolute;
   top: 0;
   left: 0;
-  background: rgba(255,255,255,0);
-} 
+  background: rgba(255, 255, 255, 0);
+}
 
-.item-view image{
+.item-view image {
   width: 112rpx;
   height: 112rpx;
 }
 
-.item-view text{
+.item-view text {
   font-size: 30rpx;
   color: #5b3f3a;
   margin-top: 4rpx;
 }
 
-button,button::after {
+button, button::after {
   border: 0;
 }
