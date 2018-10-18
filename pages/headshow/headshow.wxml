@@ -5,7 +5,7 @@
     </swiper-item>
   </block>
 </swiper>
-
+<text class='hint-txt' wx:if='{{is_show}}'>可以左右滑动切换图片哦</text>
 <view class='bottom-view'>
   <view class='down-view' bindtap='saveImg'>
     <image class='down-img' src='../../images/down_icon.png'></image>

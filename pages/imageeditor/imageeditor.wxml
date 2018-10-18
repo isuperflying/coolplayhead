@@ -21,5 +21,7 @@
   <text class='done-view' bindtap='combinePic'>完成</text>
 </view>
 <scroll-view class='pandent-scroll' scroll-y>
-  <image class="imgList" wx:for="{{pendantlist}}" wx:key="{{index}}" wx:item='{{item}}' src="{{base_img_url + item.pen_img_url}}" data-hat-id="{{index}}" bind:tap="chooseImg"></image>
+<view class='wrapper-view'>
+  <image wx:for="{{pendantlist}}" wx:key="{{index}}" wx:item='{{item}}' data-hat-id="{{index}}" bind:tap="chooseImg" class="imgList" src="{{base_img_url + item.pen_img_url}}"></image>
+  </view>
 </scroll-view>

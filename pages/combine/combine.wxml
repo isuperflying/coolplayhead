@@ -4,7 +4,7 @@
 </view>
 
 <view class='bottom-view'>
-  <view class='down-view' bindtap='savePic'>
+  <view class='down-view' bindtap='saveImg'>
     <image class='down-img' src='../../images/down_icon.png'></image>
     <text class='down-text'>下载头像</text>
   </view>

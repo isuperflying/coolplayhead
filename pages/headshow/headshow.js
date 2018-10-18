@@ -1,8 +1,9 @@
 var baseUrl = 'https://www.antleague.com/'
-let current_page = 0
+let current_page = 1
 let start_index = 0
 let current_index = 0
 let list
+let tid
 Page({
 
   /**
@@ -11,18 +12,38 @@ Page({
   data: {
     base_img_url: baseUrl + 'heads/',
     indicatorDots: false,
-    autoplay: false
+    autoplay: false,
+    is_show:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    tid = options.tid
+    wx.setNavigationBarTitle({
+      title: '趣玩头像',
+    })
     console.log('onLoad--->')
-    current_page = options.qpage;
+    current_page = parseInt(options.qpage);
     console.log('show current page--->' + current_page);
     start_index = options.cindex
     console.log('show current start_index--->' + start_index);
+    let that = this
+    wx.getStorage({
+      key: 'is_show',
+      success: function (res) {
+        that.setData({
+          is_show : false
+        })
+      },
+      fail:function(e){
+        wx.setStorage({
+          key: 'is_show',
+          data: true,
+        })
+      }
+    })
   },
   
   loadDataByPage: function () {
@@ -32,7 +53,7 @@ Page({
       url: url,
       data: {
         'page': current_page,
-        'typeid': 1
+        'typeid': tid
       },
       method: 'POST',
       success: function (result) {
@@ -145,7 +166,9 @@ Page({
   },
 
   toHome:function(e){
-    wx.navigateBack();
+    wx.navigateBack({
+      delta: 3
+    })
   },
 
   /**
@@ -153,7 +176,7 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: "@你的头像该换换了",
+      title: "@你要个性，就是现在，快换个炫酷图像吧!",
       path: '/pages/home/home'
     }
   }
