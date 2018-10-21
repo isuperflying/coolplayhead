@@ -1,55 +1,71 @@
-page{
+page {
   height: 100%;
   display: flex;
   flex-direction: column;
-   background-color: #fdf9f1;
+  background-color: #fdf9f1;
 }
 
-.container_edit{
-  height:60%;
-  width:100%;
+.container_edit {
+  height: 60%;
+  width: 100%;
   padding-top: 40px;
   padding-bottom: 10rpx;
   display: flex;
   justify-content: center;
 }
-.bg{
-  z-index:0;
+
+.bg {
+  z-index: 0;
   height: 300px;
-  width:300px;
+  width: 300px;
   border-radius: 10px;
-  border:8rpx solid white;
+  border: 8rpx solid white;
 }
 
-.hat{ 
+.hat {
   height: 100px;
   width: 100px;
   position: absolute;
-  border: dashed 0.5rpx #EED8AE;
-  top:100px;
+  border: dashed 0.5rpx #eed8ae;
+  top: 100px;
 }
-.handle,.cancel{
+
+.handle, .cancel {
   position: absolute;
   z-index: 1;
-  width:20px;
-  height:20px;
+  width: 20px;
+  height: 20px;
 }
 
-.scrollView{
-   width: 96%;
-   height: 160rpx;
-   margin-top: 6rpx;
-   white-space: nowrap;
+.scrollView {
+  width: 96%;
+  height: 160rpx;
+  margin-top: 6rpx;
+  white-space: nowrap;
 }
-.imgList{
-  height: 127rpx;
-  width: 127rpx;
-  border:1px solid #ddd;
+
+.pandent-item {
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper-view {
+  width:700rpx;
+  margin-left: 25rpx;
+  margin-top: 10rpx;
+}
+
+.imgList {
+  height: 120rpx;
+  width: 120rpx;
   margin: 10rpx;
-  border-radius: 12px;
 }
 
-.create-view{
+.create-view {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -57,7 +73,7 @@ page{
   height: 100rpx;
 }
 
-.confirm_create{
+.confirm_create {
   width: 100%;
   height: 100rpx;
   line-height: 100rpx;
@@ -67,7 +83,7 @@ page{
   font-size: 16pt;
 }
 
-.confirm_create::after{
+.confirm_create::after {
   border: 0;
 }
 
@@ -86,11 +102,14 @@ page{
 }
 
 .pandent-scroll {
-  width: 100%;
+  width: 750rpx;
   height: 300rpx;
   position: fixed;
   bottom: 0;
   left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .pandent-top-view {
@@ -105,7 +124,6 @@ page{
   flex-direction: row;
   color: #643535;
   justify-content: space-between;
-  border-bottom: 1rpx solid #e1e1e1;
   font-size: 30rpx;
 }
 
@@ -114,7 +132,7 @@ page{
   flex-direction: row;
   align-items: center;
   width: 200rpx;
-  height: 100%
+  height: 100%;
 }
 
 .pandent-left-img {

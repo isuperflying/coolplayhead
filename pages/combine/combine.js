@@ -5,12 +5,15 @@ var currentHatImg
 var bigImgUrl
 var drawBigPath
 Page({
-  
+
   data: {
-    
+
   },
 
   onLoad: function(options) {
+    wx.setNavigationBarTitle({
+      title: '头像保存',
+    })
     bigImgUrl = options.bigImgUrl
     currentHatId = options.hindex;
     currentHatImg = options.currentHatPath
@@ -21,7 +24,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-    
+
     var that = this
     wx.getImageInfo({
       src: bigImgUrl,
@@ -75,7 +78,31 @@ Page({
       }
     });
   },
+
+  saveImg: function (e) {
+    var that = this
+    //获取相册授权
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          console.log('没有授权--->')
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success() {
+              console.log('授权成功')
+              that.savePic();
+            }
+          })
+        } else {
+          console.log('已经有授权--->')
+          that.savePic();
+        }
+      }
+    })
+  },
+  
   savePic() {
+    let that = this
     const windowWidth = wx.getSystemInfoSync().windowWidth;
     wx.canvasToTempFilePath({
       x: windowWidth / 2 - 150,
@@ -92,7 +119,7 @@ Page({
             })
             console.log("success:" + res);
           },
-          fail: function(err) {
+          fail: function (err) {
             console.log(err);
             if (err.errMsg === "saveImageToPhotosAlbum:fail auth deny") {
               console.log("用户一开始拒绝了，我们想再次发起授权")
@@ -112,5 +139,21 @@ Page({
         })
       }
     });
+  },
+
+  toHome: function (e) {
+    wx.navigateBack({
+      delta: 3
+    })
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: "@你要个性，就是现在，快换个炫酷图像吧!",
+      path: '/pages/home/home'
+    }
   }
 })

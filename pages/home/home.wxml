@@ -1,16 +1,17 @@
 <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
   <block wx:for="{{imgUrls}}" wx:key='id'>
     <swiper-item>
-      <image src="{{item}}" class="slide-image" mode='widthFix' />
+      <image bindtap='banner' data-tid='{{item.tid}}' src="{{item.banner_url}}" class="slide-image" mode='widthFix' />
     </swiper-item>
   </block>
 </swiper>
 <view class='type-view'>
   <view class='type-view-top'>
     <block wx:for='{{type_top_list}}' wx:key='id'>
-      <view class='type-item-view'>
-        <image class='type-img' src='{{item.type_img_url}}'></image>
+      <view class='type-item-view' bindtap="{{index < 4 ?'category':''}}" data-tid='{{item.tid}}'>
+        <image class='type-img' src='{{item.type_img_url}}' mode='widthFix' bindtap='newApp'></image>
         <text class='type-text'>{{item.text}}</text>
+        <navigator class="nav-view" wx:if='{{isUse && index == 4}}' target="miniProgram" open-type="navigate" app-id="{{new_app_id}}" path="" extra-data="" version="release"></navigator>
       </view>
     </block>
   </view>

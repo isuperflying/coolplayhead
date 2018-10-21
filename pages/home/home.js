@@ -9,35 +9,48 @@ Page({
    * 页面的初始数据
    */
   data: {
+    new_app_id: 'wxea1ee90fb7d7797a',
+    is_nav: true,
+    isUse: true,
     base_img_url: baseUrl + 'heads/',
     imgUrls: [
-      '../../images/1.jpg',
-      '../../images/2.jpg',
-      '../../images/3.jpg',
+      {
+        banner_url: '../../images/banner1.png',
+        tid:1
+      },
+      {
+        banner_url: '../../images/banner2.png',
+        tid: 5
+      }
     ],
     indicatorDots: true,
     autoplay: false,
     interval: 5000,
     duration: 1000,
     type_top_list: [{
-        type_img_url: '../../images/d1.png',
-        text:'情侣头像'
+      type_img_url: baseUrl + 'pendant/d1.png',
+        text:'情侣头像',
+        tid:1
       },
       {
-        type_img_url: '../../images/d2.png',
-        text: '男生头像'
+        type_img_url: baseUrl + 'pendant/d2.png',
+        text: '男生头像',
+        tid: 3
       },
       {
-        type_img_url: '../../images/d3.png',
-        text: '女生头像'
+        type_img_url: baseUrl + 'pendant/d3.png',
+        text: '女生头像',
+        tid: 2
       },
       {
-        type_img_url: '../../images/d4.png',
-        text: '动漫头像'
+        type_img_url: baseUrl + 'pendant/d4.png',
+        text: '动漫头像',
+        tid: 5
       },
       {
-        type_img_url: '../../images/d5.png',
-        text: '更多头像'
+        type_img_url: baseUrl + 'pendant/d5.png',
+        text: '更多头像',
+        tid: 0
       }
     ],
     type_bottom_list:[
@@ -60,13 +73,64 @@ Page({
     ]
   },
 
+  newApp: function (e) {
+    if (this.data.isUse){
+      return;
+    }
+    var that = this
+    wx.navigateToMiniProgram({
+      appId: that.data.new_app_id
+    })
+  },
+
+  compareVersion: function (v1, v2) {
+    v1 = v1.split('.')
+    v2 = v2.split('.')
+    var len = Math.max(v1.length, v2.length)
+
+    while (v1.length < len) {
+      v1.push('0')
+    }
+    while (v2.length < len) {
+      v2.push('0')
+    }
+
+    for (var i = 0; i < len; i++) {
+      var num1 = parseInt(v1[i])
+      var num2 = parseInt(v2[i])
+
+      if (num1 > num2) {
+        return 1
+      } else if (num1 < num2) {
+        return -1
+      }
+    }
+
+    return 0
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    wx.setNavigationBarTitle({
+      title: '趣玩头像',
+    })
     random_index = Math.floor(Math.random() * 60);
     console.log('random_index--->' + random_index)
     current_page = random_index;
+
+    var that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log('sdk version--->' + res.SDKVersion)
+        var result = that.compareVersion(res.SDKVersion, '2.0.7')
+        that.setData({
+          isUse: result >= 0 ? true : false
+        })
+      },
+    })
+
     this.loadDataByPage();
   },
 
@@ -81,6 +145,7 @@ Page({
       },
       method: 'POST',
       success: function (result) {
+        wx.stopPullDownRefresh();
         console.log(result.data.data)
         if(list == null){
           list = result.data.data
@@ -90,6 +155,9 @@ Page({
         that.setData({
           hotList: list
         })
+      },
+      fail:function(e){
+        wx.stopPullDownRefresh();
       }
     })
   },
@@ -98,7 +166,11 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-
+    list = null
+    random_index = Math.floor(Math.random() * 60);
+    console.log('random_index--->' + random_index)
+    current_page = random_index;
+    this.loadDataByPage()
   },
 
   imagedetail:function(e){
@@ -129,10 +201,27 @@ Page({
     this.loadDataByPage();
   },
 
+  banner:function(e){
+    let tid = e.currentTarget.dataset.tid
+    console.log('tid--->' + tid)
+    wx.navigateTo({
+      url: '../category/category?tid=' + tid,
+    })
+  },  
+  category:function(e){
+    let tid = e.currentTarget.dataset.tid
+    console.log('tid--->' + tid)
+    wx.navigateTo({
+      url: '../category/category?tid=' + tid,
+    })
+  },
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function() {
-
+    return {
+      title: "@你要个性，就是现在，快换个炫酷图像吧!",
+      path: '/pages/home/home'
+    }
   }
 })

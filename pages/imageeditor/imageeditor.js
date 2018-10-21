@@ -27,6 +27,10 @@ Page({
     is_sticker: true,
   },
   onLoad(options) {
+    wx.setNavigationBarTitle({
+      title: '美化头像',
+    })
+
     var that = this
 
     console.log(options.bigImgUrl)
@@ -173,9 +177,10 @@ Page({
     console.log(e);
     var hindex = e.target.dataset.hatId
     this.data.currentHatId = hindex
+    let that = this
     this.setData({
       is_sticker: true,
-      current_hat_img: imgList[hindex].ico
+      current_hat_img: that.data.base_img_url + that.data.pendantlist[hindex].pen_img_url
     })
 
     currentHatImgurl = this.data.current_hat_img
@@ -183,8 +188,6 @@ Page({
     if (currentHatImgurl != null && currentHatImgurl.indexOf('https') == -1) {
       currentHatImgurl = currentHatImgurl.replace('http', 'https');
     }
-
-    var that = this
     wx.getImageInfo({
       src: currentHatImgurl,
       success: function(res) {
