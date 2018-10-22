@@ -16,14 +16,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    list = null
     tid = options.tid
     wx.setNavigationBarTitle({
-      title: '趣玩头像',
+      title: '头像小情侣',
     })
-    this.loadDataByPage();
   },
 
+  onShow:function(e){
+    list = null
+    current_page = 1
+    this.loadDataByPage();
+  },
   loadDataByPage: function () {
     var that = this
     let url = baseUrl + 'queryheadsbytype'

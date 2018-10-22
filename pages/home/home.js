@@ -114,7 +114,7 @@ Page({
    */
   onLoad: function(options) {
     wx.setNavigationBarTitle({
-      title: '趣玩头像',
+      title: '头像小情侣',
     })
     random_index = Math.floor(Math.random() * 60);
     console.log('random_index--->' + random_index)

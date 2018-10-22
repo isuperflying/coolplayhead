@@ -22,7 +22,7 @@ Page({
   onLoad: function (options) {
     tid = options.tid
     wx.setNavigationBarTitle({
-      title: '趣玩头像',
+      title: '头像小情侣',
     })
     console.log('onLoad--->')
     current_page = parseInt(options.qpage);
